@@ -1,5 +1,4 @@
 FROM fedora:20
-RUN /sbin/iptables -L
 #RUN echo 0 > /proc/sys/net/ipv4/icmp_echo_ignore_broadcasts
 #RUN /bin/systemctl stop firewalld.service
 
@@ -38,7 +37,10 @@ RUN rm apache-mq.zip
 RUN chown -R fabric8:fabric8 apache-activemq-5.9.0
 
 WORKDIR /home/fabric8/apache-activemq-5.9.0/conf
-RUN sed -i '/<destinationPolicy>/i <networkConnectors><networkConnector uri="multicast://224.0.0.251:6255?group=dockergroup&amp;trace=true"/></networkConnectors>'  activemq.xml
+RUN mv activemq.xml activemq.xml.orig
+RUN cp ../examples/conf/activemq-dynamic-network-broker1.xml activemq.xml  
+RUN sed -i "s/brokerName=\"localhost\"/brokerName=\"\$\{activemq.brokername\}\"/g" activemq.xml
+#RUN sed -i '/<destinationPolicy>/i <networkConnectors><networkConnector uri="multicast://224.0.0.251:6255?group=dockergroup&amp;trace=true"/></networkConnectors>'  activemq.xml
 
 WORKDIR /home/fabric8/apache-activemq-5.9.0/bin
 RUN chmod u+x ./activemq
@@ -53,6 +55,6 @@ EXPOSE 22 1099 61616 8161 5672 61613 1883 61614
 USER root
 
 #RUN echo 0 > /proc/sys/net/ipv4/icmp_echo_ignore_broadcasts
-ENTRYPOINT  /home/fabric8/apache-activemq-5.9.0/bin/activemq console
+ENTRYPOINT  /home/fabric8/apache-activemq-5.9.0/bin/activemq console -Dactivemq.brokername=$HOSTNAME
 
 #ENTRYPOINT /bin/systemctl stop firewalld.service
