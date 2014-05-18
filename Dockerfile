@@ -53,8 +53,4 @@ RUN echo >> data/activemq.log
 EXPOSE 22 1099 61616 8161 5672 61613 1883 61614
 
 USER root
-
-#RUN echo 0 > /proc/sys/net/ipv4/icmp_echo_ignore_broadcasts
 ENTRYPOINT  /home/fabric8/apache-activemq-5.9.0/bin/activemq console -Dactivemq.brokername=$HOSTNAME
-
-#ENTRYPOINT /bin/systemctl stop firewalld.service
