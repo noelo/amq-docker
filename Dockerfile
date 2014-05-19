@@ -46,6 +46,6 @@ EXPOSE 22 1099 61616 8161 5672 61613 1883 61614
 
 WORKDIR /home/activemq/apache-activemq-5.9.0/conf
 RUN rm -f startup.sh
-RUN curl --silent --output startup.sh  https://raw.githubusercontent.com/noelo/amq-docker/master/activemq-cluster-config.sh 
+RUN curl  --output startup.sh  https://raw.githubusercontent.com/noelo/amq-docker/master/activemq-cluster-config.sh 
 RUN chmod u+x startup.sh
 CMD  /home/activemq/apache-activemq-5.9.0/conf/startup.sh

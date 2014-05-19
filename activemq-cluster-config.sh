@@ -1,5 +1,21 @@
 #!/bin/bash 
 CLUSTER_NODES=$(env|grep ":61616"|grep -v `hostname -i`|cut -d \= -f 2)
+NC_DUPLEX=$(env|grep "NC_DUPLEX")
+declare -i NC_TTL 
+NC_TTL=$(env|grep "NC_TTL"|cut -d \= -f 2)
+
+if [ -z $NC_DUPLEX ]
+then 
+	NC_DUPLEX=false
+else
+	NC_DUPLEX=true
+fi
+
+if [ $NC_TTL -lt 1 ]
+then
+	NC_TTL=1
+fi
+	
 if [ -z $CLUSTER_NODES ]
 then
 	cp activemq.xml activemq-run.xml
@@ -8,7 +24,7 @@ else
 	echo "<networkConnectors>" > /tmp/file1
 	for OUTPUT in $CLUSTER_NODES
   	do
-    		echo "<networkConnector name=\""$OUTPUT"\" uri=\"static:("$OUTPUT")\"/>" >> /tmp/file1 
+    		echo "<networkConnector name=\""$OUTPUT"\" uri=\"static:("$OUTPUT")\" duplex=\""$NC_DUPLEX"\"  networkTTL=\""$NC_TTL"\"  /> "  >> /tmp/file1 
  	done
 	echo "</networkConnectors>" >> /tmp/file1
 
