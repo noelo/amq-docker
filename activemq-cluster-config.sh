@@ -8,4 +8,6 @@ for OUTPUT in $CLUSTER_NODES
  done
 echo "</networkConnectors>" >> /tmp/file1
 
-sed '/destinationPolicy/r /tmp/file1' activemq.xml
+sed '/destinationPolicy/r /tmp/file1' activemq.xml > activemq-run.conf
+cat activemq-run.conf
+/home/activemq/apache-activemq-5.9.0/bin/activemq console -Dactivemq.brokername=$HOSTNAME xbean:file:./activemqi-run.xml
