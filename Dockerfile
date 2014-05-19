@@ -10,10 +10,6 @@ RUN sed -i 's/.*requiretty$/#Defaults requiretty/' /etc/sudoers
 
 ENV JAVA_HOME /usr/lib/jvm/jre
 
-#ENV FABRIC8_KARAF_NAME root
-#ENV FABRIC8_BINDADDRESS 0.0.0.0
-#ENV FABRIC8_PROFILES docker
-
 # add a user for the application, with sudo permissions
 RUN useradd -m activemq ; echo activemq: | chpasswd ; usermod -a -G wheel activemq
 
@@ -48,5 +44,8 @@ RUN mkdir -p data/
 RUN echo >> data/activemq.log
 EXPOSE 22 1099 61616 8161 5672 61613 1883 61614
 
-USER root
-ENTRYPOINT  /home/activemq/apache-activemq-5.9.0/bin/activemq console -Dactivemq.brokername=$HOSTNAME
+WORKDIR /home/activemq/apache-activemq-5.9.0/conf
+RUN rm -f startup.sh
+RUN curl --silent --output startup.sh  https://raw.githubusercontent.com/noelo/amq-docker/master/activemq-cluster-config.sh 
+RUN chmod u+x startup.sh
+CMD  /home/activemq/apache-activemq-5.9.0/conf/startup.sh
