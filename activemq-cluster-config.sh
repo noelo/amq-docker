@@ -8,7 +8,7 @@ else
 	echo "<networkConnectors>" > /tmp/file1
 	for OUTPUT in $CLUSTER_NODES
   	do
-    		echo "<networkConnector uri=\"static:("$OUTPUT")\"/>" >> /tmp/file1 
+    		echo "<networkConnector name=\""$OUTPUT"\" uri=\"static:("$OUTPUT")\"/>" >> /tmp/file1 
  	done
 	echo "</networkConnectors>" >> /tmp/file1
 
