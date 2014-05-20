@@ -15,10 +15,13 @@ You can also add network connectors by using the --link argument when running th
 
 For example the following code will setup and network of four activemq brokers capable of passing message back and forth
 
-docker run  -d -P --name amq1 --env NC_DUPLEX=true --env NC_TTL=5 amq:amq
-docker run  -d -P --name amq2 --env NC_DUPLEX=true --env NC_TTL=5 amq:amq
-docker run  -d -P --name amq-central --link amq1:east1 --link amq2:east2  --env NC_DUPLEX=true --env NC_TTL=5 amq:amq
-docker run  -d -P --name amq3  --link amq-central:central --env NC_DUPLEX=true --env NC_TTL=5 amq:amq
+	docker run  -d -P --name amq1 --env NC_DUPLEX=true --env NC_TTL=5 amq:amq
+	
+	docker run  -d -P --name amq2 --env NC_DUPLEX=true --env NC_TTL=5 amq:amq
+	
+	docker run  -d -P --name amq-central --link amq1:east1 --link amq2:east2  --env NC_DUPLEX=true --env NC_TTL=5 amq:amq
+	
+	docker run  -d -P --name amq3  --link amq-central:central --env NC_DUPLEX=true --env NC_TTL=5 amq:amq
 
 There is no security settings configured on the ActiveMQ brokers
 
