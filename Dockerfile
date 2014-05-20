@@ -23,7 +23,7 @@ WORKDIR /home/activemq
 
 USER activemq
 
-RUN curl --silent --output apache-mq.zip http://central.maven.org/maven2/org/apache/activemq/apache-activemq/5.9.0/apache-activemq-5.9.0-bin.zip
+RUN curl  --output apache-mq.zip http://central.maven.org/maven2/org/apache/activemq/apache-activemq/5.9.0/apache-activemq-5.9.0-bin.zip
 RUN unzip apache-mq.zip
 RUN rm apache-mq.zip
 RUN chown -R activemq:activemq apache-activemq-5.9.0
@@ -32,7 +32,6 @@ WORKDIR /home/activemq/apache-activemq-5.9.0/conf
 #RUN mv activemq.xml activemq.xml.orig
 #RUN cp ../examples/conf/activemq-dynamic-network-broker1.xml activemq.xml  
 RUN sed -i "s/brokerName=\"localhost\"/brokerName=\"\$\{activemq.brokername\}\"/g" activemq.xml
-#RUN sed -i '/<destinationPolicy>/i <networkConnectors><networkConnector uri="multicast://224.0.0.251:6255?group=dockergroup&amp;trace=true"/></networkConnectors>'  activemq.xml
 
 WORKDIR /home/activemq/apache-activemq-5.9.0/bin
 RUN chmod u+x ./activemq
@@ -46,6 +45,6 @@ EXPOSE 22 1099 61616 8161 5672 61613 1883 61614
 
 WORKDIR /home/activemq/apache-activemq-5.9.0/conf
 RUN rm -f startup.sh
-RUN curl  --output startup.sh  https://raw.githubusercontent.com/noelo/amq-docker/master/activemq-cluster-config.sh 
+RUN curl   --output startup.sh  https://raw.githubusercontent.com/noelo/amq-docker/master/activemq-cluster-config.sh 
 RUN chmod u+x startup.sh
 CMD  /home/activemq/apache-activemq-5.9.0/conf/startup.sh
