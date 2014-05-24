@@ -1,7 +1,7 @@
 amq-docker
 ==============
 
-This project builds a [docker](http://docker.io/) container for running Apache ActiveMQ message broker
+This project builds a [docker](http://docker.io/) container for running Apache ActiveMQ message broker. It can be also used to form clusters of activeMQ brokers. Multiple protocols are supported i.e. MQTT, AMQP 1.0, Openwire and web sockets
 
 Try it out
 ----------
