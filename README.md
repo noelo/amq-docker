@@ -31,6 +31,7 @@ Building the docker container locally
 Once you have [installed docker](https://www.docker.io/gettingstarted/#h_installation) you should be able to create the containers via the following:
 
 git clone https://github.com/noelo/amq-docker.git
+
 docker build -t amq:amq .
 
 
