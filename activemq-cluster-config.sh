@@ -15,6 +15,9 @@ if [ $NC_TTL -lt 1 ]
 then
 	NC_TTL=1
 fi
+
+
+sed -i "s/brokerName=\"localhost\"/brokerName=\"\$\{activemq.brokername\}\"/g" activemq.xml
 	
 if [ -z $CLUSTER_NODES ]
 then
@@ -30,8 +33,6 @@ else
 
 	sed '/<\/destinationPolicy/r /tmp/file1' activemq.xml > activemq-run.xml
 fi
-
-sed -i "s/brokerName=\"localhost\"/brokerName=\"\$\{activemq.brokername\}\"/g" activemq.xml
 
 cat activemq-run.xml
 /home/activemq/apache-activemq-5.9.0/bin/activemq console -Dactivemq.brokername=$HOSTNAME xbean:file:./activemq-run.xml
