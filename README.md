@@ -15,6 +15,14 @@ You can also add network connectors by using the --link argument when running th
 
 For example the following code will setup and network of four activemq brokers capable of passing message back and forth
 
+
+ amq1<-------|
+ 
+             amq-central<----->amq3 
+ 
+ amq2<-------|
+
+
 	docker run  -d -P --name amq1 --env NC_DUPLEX=true --env NC_TTL=5 amq:amq
 	
 	docker run  -d -P --name amq2 --env NC_DUPLEX=true --env NC_TTL=5 amq:amq
@@ -31,6 +39,7 @@ Building the docker container locally
 Once you have [installed docker](https://www.docker.io/gettingstarted/#h_installation) you should be able to create the containers via the following:
 
 git clone https://github.com/noelo/amq-docker.git
+
 docker build -t amq:amq .
 
 
