@@ -34,7 +34,7 @@ else
 fi
 
 #Add interceptors
-sed -i '/<\/persistenceAdapter>/a<plugins><statisticsBrokerPlugin\/><connectionDotFilePlugin\/><traceBrokerPathPlugin\/><loggingBrokerPlugin logAll="false" logConnectionEvents="true"\/><\/plugins>' activemq-run.xml
+sed -i '/<\/persistenceAdapter>/a<plugins><statisticsBrokerPlugin\/><connectionDotFilePlugin file = "ActiveMQConnections.dot" \/><destinationDotFilePlugin file ="ActiveMQDestinations.dot"\/><traceBrokerPathPlugin\/><loggingBrokerPlugin logAll="false" logConnectionEvents="true"\/><\/plugins>' activemq-run.xml
 
 
 cat activemq-run.xml
