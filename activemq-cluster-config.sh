@@ -28,7 +28,7 @@ else
   	do
     		echo "<networkConnector name=\""$OUTPUT"\" uri=\"static:("$OUTPUT")\" duplex=\""$NC_DUPLEX"\"  networkTTL=\""$NC_TTL"\" decreaseNetworkConsumerPriority=\"true\" >"  >> /tmp/file1
  			echo "<excludedDestinations> <topic physicalName=\"internal.>\" /> <queue physicalName=\"internal.>\" />  </excludedDestinations> "  >> /tmp/file1
-			echo "/>">> /tmp/file1
+			echo "<networkConnector/>">> /tmp/file1
  	done
 	echo "</networkConnectors>" >> /tmp/file1
 
