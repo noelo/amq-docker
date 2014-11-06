@@ -1,5 +1,9 @@
-FROM fedora:20
-RUN yum install -y java-1.7.0-openjdk which unzip openssh-server sudo openssh-clients
+FROM fedora:latest
+MAINTAINER “Dan Walsh” <dwalsh@redhat.com>
+ENV container docker
+RUN yum -y update; yum clean all
+RUN yum -y install systemd; yum clean all;
+RUN yum install -y java-1.7.0-openjdk which unzip openssh-server sudo openssh-clients && yum clean all
 # enable no pass and speed up authentication
 RUN sed -i 's/#PermitEmptyPasswords no/PermitEmptyPasswords yes/;s/#UseDNS yes/UseDNS no/' /etc/ssh/sshd_config
 
@@ -29,9 +33,6 @@ RUN rm apache-mq.zip
 RUN chown -R activemq:activemq apache-activemq-5.9.0
 
 WORKDIR /home/activemq/apache-activemq-5.9.0/conf
-#RUN mv activemq.xml activemq.xml.orig
-#RUN cp ../examples/conf/activemq-dynamic-network-broker1.xml activemq.xml  
-RUN sed -i "s/brokerName=\"localhost\"/brokerName=\"\$\{activemq.brokername\}\"/g" activemq.xml
 
 WORKDIR /home/activemq/apache-activemq-5.9.0/bin
 RUN chmod u+x ./activemq
@@ -46,5 +47,6 @@ EXPOSE 22 1099 61616 8161 5672 61613 1883 61614
 WORKDIR /home/activemq/apache-activemq-5.9.0/conf
 RUN rm -f startup.sh
 RUN curl   --output startup.sh  https://raw.githubusercontent.com/noelo/amq-docker/master/activemq-cluster-config.sh 
-RUN chmod u+x startup.sh
+
+RUN chmod u+x ./startup.sh
 CMD  /home/activemq/apache-activemq-5.9.0/conf/startup.sh
