@@ -38,6 +38,6 @@ fi
 #Add interceptors
 sed -i '/<\/persistenceAdapter>/a<plugins><statisticsBrokerPlugin\/><connectionDotFilePlugin file = "ActiveMQConnections.dot" \/><destinationDotFilePlugin file ="ActiveMQDestinations.dot"\/><traceBrokerPathPlugin\/><loggingBrokerPlugin logAll="false" logConnectionEvents="true"\/><\/plugins>' activemq-run.xml
 
-
+env
 cat activemq-run.xml
 /home/activemq/apache-activemq-5.9.0/bin/activemq console -Dactivemq.brokername=$HOSTNAME xbean:file:./activemq-run.xml
