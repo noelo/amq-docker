@@ -24,7 +24,9 @@ else
 	echo "<networkConnectors>" > /tmp/file1
 	for OUTPUT in $CLUSTER_NODES
   	do
-    		echo "<networkConnector name=\""$OUTPUT"\" uri=\"static:("$OUTPUT")\" duplex=\""$NC_DUPLEX"\"  networkTTL=\""$NC_TTL"\"  /> "  >> /tmp/file1 
+    		echo "<networkConnector name=\""$OUTPUT"\" uri=\"static:("$OUTPUT")\" duplex=\""$NC_DUPLEX"\"  networkTTL=\""$NC_TTL"\" decreaseNetworkConsumerPriority=\"true\" >"  >> /tmp/file1
+ 			echo "<excludedDestinations> <topic physicalName=\"internal.>\" /> <queue physicalName=\"internal.>\" />  </excludedDestinations> "  >> /tmp/file1
+			echo "/>">> /tmp/file1
  	done
 	echo "</networkConnectors>" >> /tmp/file1
 
